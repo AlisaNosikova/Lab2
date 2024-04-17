@@ -2,7 +2,6 @@ package Data;
 
 
 import Data.*;
-import Lab2.Reader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,12 +19,20 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 public class Manager {
     private Reader reader = new Reader();
     private Storage storage = new Storage();
-    private Calculator calculator;
+    private Calculator calculator = new Calculator();
     private ColReader colReader = new ColReader();
     private HashMap<String,ArrayList<Double>> list;
     
     public void goToReader(String name, int index) throws IOException{
         list = reader.readFromExcel(name, index);
+        
+       
+    }
+    public void goToReaderToGetIndex(String name, String nameSheet) throws IOException{
+        goToReader(name, reader.getIndex(name, nameSheet));
+    }
+        public HashMap<String,ArrayList<Double>> getMap(){
+         return list;
     }
     public void sendToCalculator(String name) throws IOException{
         ArrayList<Double> results = new ArrayList<>();
@@ -34,29 +41,52 @@ public class Manager {
              calculator.getDescip(list.get(key));
         switch(name){
             case "means" ->
-                result = calculator.calcMean(); 
-            case "geomerticMeans" ->
-               result = calculator.calcGeometricMean();
+                results.add(calculator.calcMean());
+            case "geometricMeans" ->
+             results.add(calculator.calcGeometricMean());
             case "maxValues" ->
-                result = calculator.calcMaxValues();
+                results.add(calculator.calcMaxValues());
             case "minValues" ->
-                result = calculator.calcMinValues();
+                results.add(calculator.calcMinValues());
             case "ranges" ->
-                result = calculator.calcRanges();
+                results.add(calculator.calcRanges());
             case "StandartDeviations" ->
-                result = calculator.calcStandartDeviations();
+                results.add(calculator.calcStandartDeviations());
             case "CofVars" ->
-                result = calculator.calcVariances();
+                results.add(calculator.calcVariances());
             case "Variances" ->
-                result = calculator.calcVariances();         
+                results.add(calculator.calcVariances()); 
+            case "confidenceInterval" -> {
+                for (double value : calculator.confidenceInterval(0.05)) {
+                      results.add(value); 
+             }
+            }
+            case "numberOfElements" ->
+                results.add(calculator.calcNumberOfElements());
+            case "covariance" -> {
+                goToMatrixInfo();
+            }
         }
-    results.add(result);
     }
-    storage.addToMap(name,results);
+    if (name.equals("covariance") == false){
+        storage.addToMap(name,results);
+    }
+  
+    }
+    
+    public void goToMatrixInfo(){
+        for (String key1: list.keySet()){
+            ArrayList<Double> values = new ArrayList<>();
+            for (String key2: list.keySet()){
+                values.add(calculator.covariance(list.get(key1), list.get(key2)));
+            }
+           
+          storage.addToMatrix(key1,values);
+        }
     }
     public void goToWriter(String name) throws IOException{
         Writer writer = new Writer(name);
-        writer.writeIntoExcel(storage.getMap());
+        writer.writeIntoExcel(list.keySet(),storage.getResults(), storage.getMatrixInfo());
         
     }
 }

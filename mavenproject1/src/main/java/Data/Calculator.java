@@ -5,7 +5,8 @@
 package Data;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import org.apache.commons.math3.distribution.NormalDistribution;
+import org.apache.commons.math3.stat.correlation.Covariance;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 /**
@@ -13,9 +14,9 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
  * @author User
  */
 public class Calculator {
-    DescriptiveStatistics descrip;
-         public double calcMean(){
-       return descrip.getGeometricMean();
+    private DescriptiveStatistics descrip;
+       public double calcMean(){
+       return descrip.getMean();
 }
          public double calcGeometricMean(){
        return descrip.getGeometricMean();
@@ -38,12 +39,41 @@ public class Calculator {
         public double calcVariances(){
         return descrip.getVariance();
         }
+        public double calcNumberOfElements(){
+        return descrip.getN();
+        }
+        
+     
+    public double[] confidenceInterval(double alpha){
+       // double confidenceLevel = 0.95;
+        double standardDeviation = descrip.getStandardDeviation(); 
+        double sampleMean = descrip.getMean();
+        double sampleSize = descrip.getN();
+        NormalDistribution normalDistribution = new NormalDistribution();
+       double zValue = normalDistribution.inverseCumulativeProbability(1-0.95 / 2);
+        double marginOfError = zValue * standardDeviation / Math.sqrt(sampleSize);
+        double lowerBound = sampleMean - marginOfError;
+        double upperBound = sampleMean + marginOfError;
+        return new double[] {lowerBound, upperBound} ;
+       
+    }
+    public double covariance(ArrayList<Double> column1, ArrayList<Double> column2){
+          double[] firstMassive = new double[column1.size()];
+          double[] secondMassive = new double[column1.size()];
+           Covariance covariance = new Covariance();
+        for (int i=0; i<column1.size();i++){
+             firstMassive[i] = column1.get(i);
+             secondMassive[i] = column2.get(i);
+        }
+   
+       return covariance.covariance(firstMassive ,secondMassive);
+        
+    }
     public void getDescip(ArrayList<Double> column){
           descrip  =  new DescriptiveStatistics();
         for (Double value:column){
-            descrip.addValue(value);
-            
-            
+            descrip.addValue(value);   
         }
+    
     }
 }

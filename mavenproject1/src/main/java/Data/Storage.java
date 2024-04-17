@@ -12,12 +12,19 @@ import java.util.HashMap;
  * @author User
  */
 public class Storage {
-HashMap<String,ArrayList<Double>> list = new HashMap<>();
+private HashMap<String,ArrayList<Double>> results = new HashMap<>();
+private HashMap<String,ArrayList<Double>> matrixInfo = new HashMap<>();
     public void addToMap(String name,ArrayList<Double> array){
-        list.put(name,array);
+        results.put(name,array);
     }
-    public HashMap<String,ArrayList<Double>> getMap(){
-        return list;
+    public void addToMatrix(String key, ArrayList<Double> covInfo){
+        matrixInfo.put(key, covInfo);
+    }
+    public HashMap<String,ArrayList<Double>> getResults(){
+        return results;
+    }
+    public HashMap<String,ArrayList<Double>> getMatrixInfo(){
+        return matrixInfo;
     }
 
 }

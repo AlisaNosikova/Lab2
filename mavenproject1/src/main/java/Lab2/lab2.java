@@ -5,6 +5,7 @@
 package Lab2;
 
 
+import GUI.Frame;
 import java.io.IOException;
 
 /**

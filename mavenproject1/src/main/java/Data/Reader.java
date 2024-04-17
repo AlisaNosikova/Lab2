@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Lab2;
+package Data;
 
 
 import Data.ColReader;
@@ -54,8 +54,13 @@ public class Reader {
         }
         
         myExcelBook.close();
+   
         return mapList;
         
+    }
+    public int getIndex(String name, String nameSheet) throws IOException{
+        XSSFWorkbook myExcelBook = new XSSFWorkbook(new FileInputStream(name));
+        return myExcelBook.getSheetIndex(nameSheet);
     }
 
 }

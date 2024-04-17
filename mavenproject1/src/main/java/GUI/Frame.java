@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Lab2;
+package GUI;
 
-import Data.Panel;
-import Data.Panel;
+import GUI.Panel;
+import GUI.Panel;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import javax.swing.JButton;
@@ -19,12 +19,12 @@ import javax.swing.JFrame;
     JButton b;
     public Frame(String title){
         super(title);
-        setSize(300,200);
+        setSize(350,300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);      
-        Panel menu = new Panel();
-        Container con= this.getContentPane(); // Создаем панель содержимого
+        Panel panel = new Panel(this);
+        Container con= this.getContentPane();
         con.setLayout(new BorderLayout());
-        con.add(menu, BorderLayout.CENTER);
+        con.add(panel, BorderLayout.CENTER);
         setVisible(true);
     }
     
