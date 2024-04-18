@@ -18,9 +18,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
-import static javax.swing.JComponent.TOOL_TIP_TEXT_KEY;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 
 /**
  *
@@ -35,7 +33,9 @@ public class Panel extends JPanel{
     private JFrame frame;
     private boolean isAnySelected = false;
     private ButtonGroup buttonGroup;
+  
     public Panel(JFrame frame){
+       
        this.frame = frame;
        this.manager = new Manager();
        this.exportButton = new JButton("Export");
@@ -135,12 +135,12 @@ public class Panel extends JPanel{
         createNewCheckBox("numberOfElements",newPanel);
         ButtonGroup group = new ButtonGroup();
         
-        JOptionPane.showMessageDialog(null, newPanel, "Впишите название вариант", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(null, newPanel, "Выберите показатели, которые необходимо подсчитать", JOptionPane.PLAIN_MESSAGE);
       try {
          
           checkCheckBoxSelection( newPanel);
           if ( isAnySelected == false){
-              JOptionPane.showMessageDialog(null, "Стат.данные не выбраны!", "Предупреждение", JOptionPane.ERROR_MESSAGE);  
+              JOptionPane.showMessageDialog(null, "Статистические показатели не выбраны!", "Предупреждение", JOptionPane.ERROR_MESSAGE);  
           }
       } catch (IOException ex) {
           Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
@@ -206,19 +206,19 @@ public class Panel extends JPanel{
         try{
         JPanel panel = new JPanel();
         JLabel choiceLabel = new JLabel("Как выбрать вариант?");
-        JRadioButton b1 = new JRadioButton("Написать вариант");
-        JRadioButton b2 = new JRadioButton("Ввести номер");
+        JRadioButton bWord = new JRadioButton("Написать вариант");
+        JRadioButton bNum = new JRadioButton("Ввести номер");
         panel.add(choiceLabel);
-        panel.add(b1);
-        panel.add(b2);
-          buttonGroup.add(b1);
-        buttonGroup.add(b2);
+        panel.add(bWord);
+        panel.add(bNum);
+        buttonGroup.add(bWord);
+        buttonGroup.add(bNum);
         JPanel panelText = new JPanel();
         JTextField variant = new JTextField(10);
         panelText.add(variant);
         JOptionPane.showMessageDialog(null, panel, "Выберите способ для выбора", JOptionPane.QUESTION_MESSAGE);
 
-        if (b1.isSelected()==true){
+        if (bWord.isSelected()==true){
             JOptionPane.showMessageDialog(null, panelText, "Впишите название варианта", JOptionPane.PLAIN_MESSAGE);
             try {
                 if (variant.getText().isEmpty()){
@@ -231,7 +231,7 @@ public class Panel extends JPanel{
             }
         }
         
-         else if (b2.isSelected()==true){
+         else if (bNum.isSelected()==true){
             JOptionPane.showMessageDialog(null, panelText, "Впишите номер варианта", JOptionPane.PLAIN_MESSAGE);
             try {
                  if (variant.getText().isEmpty()){

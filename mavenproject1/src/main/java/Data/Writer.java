@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -29,7 +28,7 @@ public class Writer {
         
     }
     public void writeIntoExcel(Set<String> sampleNames, HashMap<String,ArrayList<Double>> results, HashMap<String,ArrayList<Double>> infoMatrix) throws FileNotFoundException, IOException {
-           createTable( sampleNames, results, sheet1);
+            createTable( sampleNames, results, sheet1);
             createMatrix(infoMatrix, sheet2);
             book.write(new FileOutputStream(name));
        

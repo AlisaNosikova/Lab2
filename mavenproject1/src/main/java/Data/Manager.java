@@ -1,11 +1,9 @@
 package Data;
 
 
-import Data.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -20,7 +18,6 @@ public class Manager {
     private Reader reader = new Reader();
     private Storage storage = new Storage();
     private Calculator calculator = new Calculator();
-    private ColReader colReader = new ColReader();
     private HashMap<String,ArrayList<Double>> list;
     
     public void goToReader(String name, int index) throws IOException{
@@ -31,7 +28,7 @@ public class Manager {
     public void goToReaderToGetIndex(String name, String nameSheet) throws IOException{
         goToReader(name, reader.getIndex(name, nameSheet));
     }
-        public HashMap<String,ArrayList<Double>> getMap(){
+    public HashMap<String,ArrayList<Double>> getMap(){
          return list;
     }
     public void sendToCalculator(String name) throws IOException{
@@ -57,7 +54,7 @@ public class Manager {
             case "Variances" ->
                 results.add(calculator.calcVariances()); 
             case "confidenceInterval" -> {
-                for (double value : calculator.confidenceInterval(0.05)) {
+                for (double value : calculator.confidenceInterval()) {
                       results.add(value); 
              }
             }

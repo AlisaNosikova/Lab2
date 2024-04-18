@@ -14,7 +14,7 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
  * @author User
  */
 public class Calculator {
-    private DescriptiveStatistics descrip;
+   private DescriptiveStatistics descrip;
        public double calcMean(){
        return descrip.getMean();
 }
@@ -44,8 +44,7 @@ public class Calculator {
         }
         
      
-    public double[] confidenceInterval(double alpha){
-       // double confidenceLevel = 0.95;
+    public double[] confidenceInterval(){
         double standardDeviation = descrip.getStandardDeviation(); 
         double sampleMean = descrip.getMean();
         double sampleSize = descrip.getN();

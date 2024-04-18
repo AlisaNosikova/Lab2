@@ -4,11 +4,8 @@
  */
 package GUI;
 
-import GUI.Panel;
-import GUI.Panel;
 import java.awt.BorderLayout;
 import java.awt.Container;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 
 /**
@@ -16,7 +13,6 @@ import javax.swing.JFrame;
  * @author User
  */
     public class Frame extends JFrame{
-    JButton b;
     public Frame(String title){
         super(title);
         setSize(350,300);
