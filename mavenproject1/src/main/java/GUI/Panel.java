@@ -232,13 +232,19 @@ public class Panel extends JPanel{
         }
         
          else if (bNum.isSelected()==true){
+             
             JOptionPane.showMessageDialog(null, panelText, "Впишите номер варианта", JOptionPane.PLAIN_MESSAGE);
             try {
                  if (variant.getText().isEmpty()){
                       JOptionPane.showMessageDialog(null, "Вы ничего не ввели", "Предупреждение", JOptionPane.ERROR_MESSAGE);
                 return;
         }
+                 if(Integer.parseInt(variant.getText())==0){
+                            JOptionPane.showMessageDialog(null, "Такого варианта нет!", "Предупреждение", JOptionPane.ERROR_MESSAGE);
+                 }
+                 else{
                 manager.goToReader(fileChooser.getSelectedFile().getPath(),Integer.parseInt(variant.getText()));
+                 }
             } catch (IOException ex) {
                 Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -21,7 +21,7 @@ public class Manager {
     private HashMap<String,ArrayList<Double>> list;
     
     public void goToReader(String name, int index) throws IOException{
-        list = reader.readFromExcel(name, index);
+        list = reader.readFromExcel(name, index-1);
         
        
     }
