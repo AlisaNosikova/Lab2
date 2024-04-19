@@ -34,6 +34,7 @@ public class Manager {
     public void sendToCalculator(String name) throws IOException{
         ArrayList<Double> results = new ArrayList<>();
         double result = 0.0;
+        System.out.println(list.keySet());
         for (String key: list.keySet()){
              calculator.getDescip(list.get(key));
         switch(name){

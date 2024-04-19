@@ -31,6 +31,7 @@ public class Reader {
 
         for (int i = 0; i < colNum; i++) {
             String key = myExcelSheet.getRow(0).getCell(i).getStringCellValue(); 
+            
             ArrayList<Double> list = new ArrayList<>();
 
             for (int j = 1; j <= rowNum; j++) { 
@@ -55,7 +56,7 @@ public class Reader {
     }
     public int getIndex(String name, String nameSheet) throws IOException{
         XSSFWorkbook myExcelBook = new XSSFWorkbook(new FileInputStream(name));
-        return myExcelBook.getSheetIndex(nameSheet);
+        return myExcelBook.getSheetIndex((nameSheet))-1;
     }
 
 }
