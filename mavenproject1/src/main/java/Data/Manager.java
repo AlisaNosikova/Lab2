@@ -21,12 +21,12 @@ public class Manager {
     private HashMap<String,ArrayList<Double>> list;
     
     public void goToReader(String name, int index) throws IOException{
-        list = reader.readFromExcel(name, index-1);
+        list = reader.readFromExcel(name, index);
         
        
     }
-    public void goToReaderToGetIndex(String name, String nameSheet) throws IOException{
-        goToReader(name, reader.getIndex(name, nameSheet));
+    public int goToReaderToGetIndex(String name, String nameSheet) throws IOException{
+        return  reader.getIndex(name, nameSheet);
     }
     public HashMap<String,ArrayList<Double>> getMap(){
          return list;

@@ -53,6 +53,7 @@ public class Panel extends JPanel{
     public class ImportActionListener implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
+    boolean choiceIsMade = false;
     JFileChooser fileChooser = new JFileChooser();
     fileChooser.setDialogTitle("Выбор директории");
     fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
@@ -64,7 +65,9 @@ public class Panel extends JPanel{
     if (selectedFile != null && selectedFile.exists() && selectedFile.getName().matches(".*\\.xlsx")) {
         if (result == JFileChooser.APPROVE_OPTION) {
             JOptionPane.showMessageDialog(Panel.this, fileChooser.getSelectedFile());
-            chooseVar(fileChooser);
+            while ( choiceIsMade == false){
+            choiceIsMade = chooseVar(fileChooser,choiceIsMade);
+            }
         }
     } else {
         if (selectedFile != null && !selectedFile.exists()) {
@@ -73,7 +76,8 @@ public class Panel extends JPanel{
             JOptionPane.showMessageDialog(null, "Выберите файл с расширением xlsx", "Предупреждение", JOptionPane.ERROR_MESSAGE);
         }
     }
-}
+
+    }
     }
    public class ExportActionListener implements ActionListener{
     @Override
@@ -202,7 +206,8 @@ public class Panel extends JPanel{
         gbc.gridy = 5;
         add(exitButton, gbc);
     }
-    public void chooseVar(JFileChooser fileChooser){
+    public boolean chooseVar(JFileChooser fileChooser, boolean choiceIsMade){
+        
         try{
         JPanel panel = new JPanel();
         JLabel choiceLabel = new JLabel("Как выбрать вариант?");
@@ -223,9 +228,18 @@ public class Panel extends JPanel{
             try {
                 if (variant.getText().isEmpty()){
                       JOptionPane.showMessageDialog(null, "Вы ничего не ввели", "Предупреждение", JOptionPane.ERROR_MESSAGE);
-                return;
+                
         }
-                manager.goToReaderToGetIndex(fileChooser.getSelectedFile().getPath(),variant.getText());
+               int choiceByWord = manager.goToReaderToGetIndex(fileChooser.getSelectedFile().getPath(),variant.getText());
+               if ( choiceByWord ==0){
+                       JOptionPane.showMessageDialog(null, "Такого варианта нет!", "Предупреждение", JOptionPane.ERROR_MESSAGE);
+                   
+               }
+               else{
+                   manager.goToReader(fileChooser.getSelectedFile().getPath(), choiceByWord);
+                   choiceIsMade = true;
+               }
+ 
             } catch (IOException ex) {
                 Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -237,13 +251,14 @@ public class Panel extends JPanel{
             try {
                  if (variant.getText().isEmpty()){
                       JOptionPane.showMessageDialog(null, "Вы ничего не ввели", "Предупреждение", JOptionPane.ERROR_MESSAGE);
-                return;
+               
         }
                  if(Integer.parseInt(variant.getText())==0){
                             JOptionPane.showMessageDialog(null, "Такого варианта нет!", "Предупреждение", JOptionPane.ERROR_MESSAGE);
                  }
                  else{
                 manager.goToReader(fileChooser.getSelectedFile().getPath(),Integer.parseInt(variant.getText()));
+                choiceIsMade = true;
                  }
             } catch (IOException ex) {
                 Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
@@ -259,6 +274,8 @@ public class Panel extends JPanel{
                     JOptionPane.showMessageDialog(null, "Такого варианта нет!", "Предупреждение", JOptionPane.ERROR_MESSAGE);
                 
             }
+        return choiceIsMade;
     }
+    
     
 }

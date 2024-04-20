@@ -31,7 +31,7 @@ public class Writer {
             createTable( sampleNames, results, sheet1);
             createMatrix(infoMatrix, sheet2);
             book.write(new FileOutputStream(name));
-       
+            book.close();
        
 }
     
@@ -50,7 +50,7 @@ public class Writer {
                          row = sheet.createRow(j+1);
                      }
                       Cell cell = row.createCell(i+1);
-                    //  System.out.println(infoList.get(nameOfCol).get(j));
+                    
                   try{
               cell.setCellValue(infoList.get(nameOfCol).get(j));
                   }catch( IndexOutOfBoundsException en){
@@ -114,5 +114,6 @@ public void createColNames(Set<String> colnames, Sheet sheet) {
         rowIndex++;
     }
 }
+  
 }
 

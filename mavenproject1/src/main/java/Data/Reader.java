@@ -23,7 +23,7 @@ public class Reader {
 
     public HashMap<String, ArrayList<Double>> readFromExcel(String name,int index) throws IOException {
         XSSFWorkbook myExcelBook = new XSSFWorkbook(new FileInputStream(name));
-        XSSFSheet myExcelSheet = myExcelBook.getSheetAt(index);
+        XSSFSheet myExcelSheet = myExcelBook.getSheetAt(index-1);
         HashMap<String,ArrayList<Double>> mapList = new HashMap<>(); 
        
         int colNum = myExcelSheet.getRow(0).getLastCellNum(); 
@@ -56,7 +56,7 @@ public class Reader {
     }
     public int getIndex(String name, String nameSheet) throws IOException{
         XSSFWorkbook myExcelBook = new XSSFWorkbook(new FileInputStream(name));
-        return myExcelBook.getSheetIndex((nameSheet))-1;
+        return myExcelBook.getSheetIndex((nameSheet)) +1 ;
     }
 
 }
